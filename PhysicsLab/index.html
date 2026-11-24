@@ -13,6 +13,10 @@
     <script src="js/physics/circuits.js" defer></script>
     <script src="js/physics/magnetism.js" defer></script>
     <script src="js/physics/induction.js" defer></script>
+    <script src="js/utils.js" defer></script>
+    <script src="js/features/theory.js" defer></script>
+    <script src="js/features/calculator.js" defer></script>
+    <script src="js/features/exercises.js" defer></script>
     <script src="js/main.js" defer></script>
 </head>
 
@@ -50,10 +54,28 @@
                 </nav>
             </div>
 
+            <div class="sidebar-section">
+                <span class="section-label">FERRAMENTAS</span>
+                <nav class="navigation">
+                    <button class="nav-item" data-page="calculator">
+                        <span class="nav-icon">∑</span>
+                        <span>Calculadora</span>
+                    </button>
+                    <button class="nav-item" data-page="exercises">
+                        <span class="nav-icon">✎</span>
+                        <span>Exercícios</span>
+                    </button>
+                    <button class="nav-item" data-page="theory">
+                        <span class="nav-icon">◫</span>
+                        <span>Referencial teórico</span>
+                    </button>
+                </nav>
+            </div>
+
             <div class="sidebar-footer">
                 <div class="status-indicator"></div>
                 <span>Sistema operacional</span>
-                <span class="version">v1.0</span>
+                <span class="version">v1.1</span>
             </div>
 
         </aside>
@@ -141,8 +163,17 @@
                             <p>Descubra como a variação do fluxo magnético gera tensão.</p>
                             <div class="module-link">Acessar módulo <span>→</span></div>
                         </article>
+
+                        <article class="module-card" data-go="exercises">
+                            <div class="module-icon green">✎</div>
+                            <span class="module-tag">PRÁTICA</span>
+                            <h4>Exercícios</h4>
+                            <p>Resolva questões geradas automaticamente e acompanhe seu desempenho.</p>
+                            <div class="module-link">Praticar agora <span>→</span></div>
+                        </article>
                     </div>
 
+                    <div class="bottom-grid">
                     <div class="info-card theory-card">
                         <span class="eyebrow">BASE CIENTÍFICA</span>
                         <h3>Aprenda a teoria</h3>
@@ -153,6 +184,19 @@
                         <button class="secondary-button" data-go="theory">
                             Consultar conteúdo →
                         </button>
+                    </div>
+
+                    <div class="info-card">
+                        <span class="eyebrow">FERRAMENTA</span>
+                        <h3>Calculadora de fórmulas</h3>
+                        <p>
+                            Escolha uma fórmula e calcule qualquer variável
+                            a partir das outras, com o passo a passo.
+                        </p>
+                        <button class="secondary-button" data-go="calculator">
+                            Abrir calculadora →
+                        </button>
+                    </div>
                     </div>
                 </div>
             </section>
@@ -677,6 +721,223 @@
                     <span>ε = −N · ΔΦ / Δt</span>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================
+     CALCULADORA
+========================================= -->
+<section class="page" id="calculator">
+    <div class="page-heading">
+        <span class="eyebrow">FERRAMENTA · CÁLCULO</span>
+        <h2>Calculadora de fórmulas</h2>
+        <p>Escolha uma fórmula, selecione a grandeza que deseja calcular e preencha as demais. Aceita vírgula ou ponto e notação científica (ex.: 1,6e-19).</p>
+    </div>
+
+    <div class="calc-layout">
+        <aside class="simulator-panel calc-sidebar">
+            <div class="panel-heading">
+                <div>
+                    <span class="eyebrow">BIBLIOTECA</span>
+                    <h3>Fórmulas</h3>
+                </div>
+            </div>
+            <div class="calc-formula-list" id="calc-formulas"></div>
+        </aside>
+
+        <div class="calc-main">
+            <div class="simulator-panel">
+                <div class="panel-heading">
+                    <div>
+                        <span class="eyebrow">FÓRMULA SELECIONADA</span>
+                        <h3 id="calc-formula-title">—</h3>
+                    </div>
+                    <span class="diagram-badge" id="calc-formula-expr">—</span>
+                </div>
+
+                <span class="calc-section-label">O que você quer calcular?</span>
+                <div class="calc-targets" id="calc-targets"></div>
+
+                <div class="control-divider"></div>
+
+                <div class="calc-inputs" id="calc-inputs"></div>
+
+                <button class="primary-button calc-save" id="calc-save">
+                    Salvar no histórico <span>↵</span>
+                </button>
+            </div>
+
+            <div class="calc-output">
+                <div class="result-card highlight-result calc-result">
+                    <span class="result-label" id="calc-result-label">RESULTADO</span>
+                    <strong id="calc-result-value">—</strong>
+                    <div class="calc-steps" id="calc-steps"></div>
+                </div>
+
+                <div class="simulator-panel calc-history-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="eyebrow">REGISTRO</span>
+                            <h3>Histórico</h3>
+                        </div>
+                        <button class="text-button" id="calc-clear-history">Limpar</button>
+                    </div>
+                    <ul class="calc-history" id="calc-history"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================
+     EXERCÍCIOS
+========================================= -->
+<section class="page" id="exercises">
+    <div class="page-heading">
+        <span class="eyebrow">PRÁTICA · AUTOAVALIAÇÃO</span>
+        <h2>Exercícios</h2>
+        <p>Questões numéricas com valores sorteados a cada rodada, mais questões conceituais. Seu desempenho fica salvo neste navegador.</p>
+    </div>
+
+    <div class="exercise-topics">
+        <button class="exercise-topic active" data-topic="all">Todos os temas</button>
+        <button class="exercise-topic" data-topic="circuits">ϟ Circuitos</button>
+        <button class="exercise-topic" data-topic="magnetism">◎ Magnetismo</button>
+        <button class="exercise-topic" data-topic="induction">↝ Indução</button>
+    </div>
+
+    <div class="exercise-layout">
+        <div class="simulator-panel exercise-card" id="exercise-card">
+            <div class="exercise-meta">
+                <span class="theory-area blue" id="exercise-tag">—</span>
+                <span class="exercise-type" id="exercise-type">—</span>
+            </div>
+
+            <p class="exercise-statement" id="exercise-statement"></p>
+
+            <div id="exercise-answer"></div>
+
+            <div class="exercise-hint-box" id="exercise-hint-box" hidden></div>
+
+            <div class="exercise-feedback" id="exercise-feedback" hidden></div>
+
+            <div class="exercise-actions">
+                <button class="text-button" id="exercise-hint">💡 Ver dica</button>
+                <div class="exercise-actions-right">
+                    <button class="secondary-button" id="exercise-next">Pular / próxima →</button>
+                    <button class="primary-button" id="exercise-check">Verificar <span>✓</span></button>
+                </div>
+            </div>
+        </div>
+
+        <aside class="exercise-stats">
+            <div class="simulator-panel">
+                <div class="panel-heading">
+                    <div>
+                        <span class="eyebrow">DESEMPENHO</span>
+                        <h3>Suas estatísticas</h3>
+                    </div>
+                </div>
+
+                <div class="stat-grid">
+                    <div class="stat"><strong id="stat-correct">0</strong><span>Acertos</span></div>
+                    <div class="stat"><strong id="stat-total">0</strong><span>Respondidas</span></div>
+                    <div class="stat"><strong id="stat-accuracy">—</strong><span>Aproveitamento</span></div>
+                    <div class="stat"><strong id="stat-streak">0</strong><span>Sequência atual</span></div>
+                </div>
+
+                <div class="stat-best">🏆 Melhor sequência: <strong id="stat-best">0</strong></div>
+
+                <div class="control-divider"></div>
+
+                <span class="calc-section-label">Por tema</span>
+                <div id="exercise-topic-stats"></div>
+
+                <button class="reset-button" id="exercise-reset-stats">↻ Zerar estatísticas</button>
+            </div>
+        </aside>
+    </div>
+</section>
+
+<!-- =========================================
+     REFERENCIAL TEÓRICO
+========================================= -->
+<section class="page" id="theory">
+    <div class="page-heading">
+        <span class="eyebrow">BASE CIENTÍFICA</span>
+        <h2>Referencial teórico</h2>
+        <p>Conceitos, equações e grandezas usados nas simulações. Use a busca para encontrar um tema ou uma fórmula.</p>
+    </div>
+
+    <div class="simulator-panel theory-toolbar">
+        <div class="theory-search">
+            <span>⌕</span>
+            <input type="search" id="theory-search" placeholder="Buscar por tema, fórmula ou grandeza (ex.: fluxo, Ohm, μ0)…">
+        </div>
+        <div class="theory-filters">
+            <button class="theory-filter active" data-filter="all">Todos</button>
+            <button class="theory-filter" data-filter="circuits">Circuitos</button>
+            <button class="theory-filter" data-filter="magnetism">Magnetismo</button>
+            <button class="theory-filter" data-filter="induction">Indução</button>
+            <span class="theory-count" id="theory-count"></span>
+        </div>
+    </div>
+
+    <div class="theory-list" id="theory-list"></div>
+
+    <div class="placeholder-panel theory-empty" id="theory-empty" hidden>
+        <div class="placeholder-icon">⌕</div>
+        <h3>Nenhum tópico encontrado</h3>
+        <p>Tente outro termo de busca ou altere o filtro.</p>
+    </div>
+
+    <div class="simulator-panel details-panel">
+        <div class="panel-heading">
+            <div>
+                <span class="eyebrow">REFERÊNCIA RÁPIDA</span>
+                <h3>Constantes físicas</h3>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="circuit-table">
+                <thead>
+                    <tr><th>Constante</th><th>Símbolo</th><th>Valor</th><th>Unidade</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Carga elementar</td><td>e</td><td>1,602 × 10⁻¹⁹</td><td>C</td></tr>
+                    <tr><td>Permeabilidade do vácuo</td><td>μ0</td><td>4π × 10⁻⁷</td><td>T·m/A</td></tr>
+                    <tr><td>Permissividade do vácuo</td><td>ε0</td><td>8,854 × 10⁻¹²</td><td>F/m</td></tr>
+                    <tr><td>Constante eletrostática</td><td>k</td><td>8,99 × 10⁹</td><td>N·m²/C²</td></tr>
+                    <tr><td>Massa do elétron</td><td>me</td><td>9,109 × 10⁻³¹</td><td>kg</td></tr>
+                    <tr><td>Massa do próton</td><td>mp</td><td>1,673 × 10⁻²⁷</td><td>kg</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="simulator-panel details-panel">
+        <div class="panel-heading">
+            <div>
+                <span class="eyebrow">SISTEMA INTERNACIONAL</span>
+                <h3>Grandezas e unidades</h3>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="circuit-table">
+                <thead>
+                    <tr><th>Grandeza</th><th>Símbolo</th><th>Unidade</th><th>Equivalência</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Corrente elétrica</td><td>I</td><td>ampère (A)</td><td>1 A = 1 C/s</td></tr>
+                    <tr><td>Tensão elétrica</td><td>U</td><td>volt (V)</td><td>1 V = 1 J/C</td></tr>
+                    <tr><td>Resistência</td><td>R</td><td>ohm (Ω)</td><td>1 Ω = 1 V/A</td></tr>
+                    <tr><td>Potência</td><td>P</td><td>watt (W)</td><td>1 W = 1 J/s</td></tr>
+                    <tr><td>Campo magnético</td><td>B</td><td>tesla (T)</td><td>1 T = 1 N/(A·m) = 10⁴ G</td></tr>
+                    <tr><td>Fluxo magnético</td><td>Φ</td><td>weber (Wb)</td><td>1 Wb = 1 T·m²</td></tr>
+                    <tr><td>Força eletromotriz</td><td>ε</td><td>volt (V)</td><td>1 V = 1 Wb/s</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </section>
