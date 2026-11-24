@@ -47,7 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.navigateTo = navigateTo;
 
-    // Delegação: funciona também para elementos criados dinamicamente
     document.addEventListener("click", event => {
 
         const navItem = event.target.closest(".nav-item[data-page]");

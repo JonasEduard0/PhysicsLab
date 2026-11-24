@@ -1,9 +1,3 @@
-/* =========================================
-   PHYSICS LAB - CALCULADORA DE FÓRMULAS
-   Resolve qualquer variável de uma fórmula
-   a partir das demais.
-========================================= */
-
 document.addEventListener("DOMContentLoaded", () => {
 
     const formulaList = document.getElementById("calc-formulas");
@@ -277,8 +271,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let target = Object.keys(current.vars)[0];
     const inputValues = {};
 
-    /* ---------- Renderização ---------- */
-
     function renderFormulaList() {
         let lastArea = "";
         formulaList.innerHTML = formulas.map(f => {
@@ -353,8 +345,6 @@ document.addEventListener("DOMContentLoaded", () => {
             </li>
         `).join("");
     }
-
-    /* ---------- Cálculo ---------- */
 
     function readValues() {
         const values = {};
@@ -443,8 +433,6 @@ document.addEventListener("DOMContentLoaded", () => {
         historyStore.save(history);
         renderHistory();
     }
-
-    /* ---------- Eventos ---------- */
 
     formulaList.addEventListener("click", event => {
         const button = event.target.closest("[data-formula]");

@@ -1,9 +1,3 @@
-/* =========================================
-   PHYSICS LAB - EXERCÍCIOS
-   Questões numéricas geradas aleatoriamente
-   e questões conceituais com correção.
-========================================= */
-
 document.addEventListener("DOMContentLoaded", () => {
 
     const card = document.getElementById("exercise-card");
@@ -37,8 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const fmt = (value, decimals = 2) => formatNumber(Number(value.toFixed(decimals)), decimals);
-
-    /* ---------- Questões numéricas (geradas) ---------- */
 
     const generators = [
         {
@@ -287,8 +279,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     ];
 
-    /* ---------- Questões conceituais ---------- */
-
     const conceptual = [
         {
             topic: "circuits",
@@ -389,8 +379,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     ];
 
-    /* ---------- Estado e estatísticas ---------- */
-
     const statsStore = storage("physicslab.exercises.stats", null);
     const emptyStats = () => ({
         correct: 0,
@@ -431,8 +419,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }).join("");
     }
 
-    /* ---------- Fluxo da questão ---------- */
-
     function newQuestion() {
         const numeric = generators.filter(g => activeTopic === "all" || g.topic === activeTopic);
         const concepts = conceptual.filter(c => activeTopic === "all" || c.topic === activeTopic);
@@ -441,7 +427,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let key;
         let attempts = 0;
 
-        // Evita repetir a mesma questão conceitual em sequência
         do {
             if (Math.random() < 0.6) {
                 const gen = pick(numeric);

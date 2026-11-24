@@ -1,7 +1,3 @@
-/* =========================================
-   PHYSICS LAB - REFERENCIAL TEÓRICO
-========================================= */
-
 document.addEventListener("DOMContentLoaded", () => {
 
     const list = document.getElementById("theory-list");

@@ -1,8 +1,3 @@
-
-/* =========================================
-   PHYSICS LAB - CIRCUITOS ELÉTRICOS
-========================================= */
-
 document.addEventListener("DOMContentLoaded", () => {
 
     const voltageInput = document.getElementById("circuit-voltage");
@@ -229,7 +224,6 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     }
 
-
     function resistorVertical(x, y, name) {
         return `
             <path class="circuit-resistor"
@@ -336,7 +330,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         else if (selectedCircuit === "mixed") {
             drawing = `
                 <path class="circuit-wire"
@@ -374,7 +367,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     text-anchor="middle">Circuito misto</text>
             `;
         }
-
 
         diagram.innerHTML = `
             <svg viewBox="0 0 620 300"

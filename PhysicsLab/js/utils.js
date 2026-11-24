@@ -1,7 +1,3 @@
-/* =========================================
-   PHYSICS LAB - UTILITÁRIOS COMPARTILHADOS
-========================================= */
-
 window.PhysicsUtils = (() => {
 
     const constants = {
@@ -32,7 +28,6 @@ window.PhysicsUtils = (() => {
         return value.toLocaleString("pt-BR", { maximumFractionDigits: maxDecimals });
     }
 
-    // Escolhe o prefixo SI mais legível (ex.: 0,0025 T → 2,5 mT)
     function formatSI(value, unit) {
         if (!Number.isFinite(value)) return "—";
         if (!unit || unit === "°" || unit === "espiras" || value === 0) {
@@ -83,7 +78,6 @@ window.PhysicsUtils = (() => {
                 try {
                     localStorage.setItem(key, JSON.stringify(value));
                 } catch {
-                    /* armazenamento indisponível: ignora */
                 }
             }
         };

@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     const fieldInitialInput = document.getElementById("induction-field-initial");
     const fieldFinalInput = document.getElementById("induction-field-final");
