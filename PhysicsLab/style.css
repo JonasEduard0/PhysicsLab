@@ -11,6 +11,7 @@
     --green: #16a36a;
     --purple: #805ad5;
     --orange: #e58a32;
+    --teal: #0e9aa7;
     --sidebar-width: 255px;
 }
 
@@ -420,7 +421,7 @@ button {
 
 .module-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 15px;
 }
 
@@ -466,6 +467,11 @@ button {
 .module-icon.orange {
     background: #fff5e9;
     color: var(--orange);
+}
+
+.module-icon.teal {
+    background: #e6f7f8;
+    color: var(--teal);
 }
 
 .module-icon.green {
@@ -2120,6 +2126,8 @@ button {
 .topic-stat-bar i.circuits { background: var(--primary); }
 .topic-stat-bar i.magnetism { background: var(--purple); }
 .topic-stat-bar i.induction { background: var(--orange); }
+.topic-stat-bar i.electrostatics { background: var(--green); }
+.topic-stat-bar i.capacitors { background: var(--teal); }
 
 .exercise-stats .reset-button {
     margin-top: 6px;
@@ -2212,6 +2220,8 @@ button {
 .theory-area.blue { background: #eff6ff; color: var(--primary); }
 .theory-area.purple { background: #f3efff; color: var(--purple); }
 .theory-area.orange { background: #fff5e9; color: var(--orange); }
+.theory-area.green { background: #eafaf2; color: var(--green); }
+.theory-area.teal { background: #e6f7f8; color: var(--teal); }
 
 .theory-link {
     background: transparent;
@@ -2321,4 +2331,34 @@ button {
         flex: 1;
         justify-content: center;
     }
+}
+
+
+/* Eletrostática e capacitores */
+.induction-input select {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #f8fafc;
+    color: #1e293b;
+    font-size: 14px;
+    outline: none;
+}
+.induction-input select:focus {
+    border-color: var(--primary);
+}
+.es-legend-vector,
+.es-legend-equi {
+    display: inline-block;
+    width: 18px;
+    height: 0;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+.es-legend-vector {
+    border-top: 3px solid var(--green);
+}
+.es-legend-equi {
+    border-top: 2px dashed var(--orange);
 }

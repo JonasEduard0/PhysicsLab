@@ -13,6 +13,8 @@
     <script src="js/physics/circuits.js" defer></script>
     <script src="js/physics/magnetism.js" defer></script>
     <script src="js/physics/induction.js" defer></script>
+    <script src="js/physics/electrostatics.js" defer></script>
+    <script src="js/physics/capacitors.js" defer></script>
     <script src="js/utils.js" defer></script>
     <script src="js/features/theory.js" defer></script>
     <script src="js/features/calculator.js" defer></script>
@@ -38,6 +40,14 @@
                     <button class="nav-item active" data-page="home">
                         <span class="nav-icon">⌂</span>
                         <span>Início</span>
+                    </button>
+                    <button class="nav-item" data-page="electrostatics">
+                        <span class="nav-icon">±</span>
+                        <span>Eletrostática</span>
+                    </button>
+                    <button class="nav-item" data-page="capacitors">
+                        <span class="nav-icon">⫴</span>
+                        <span>Capacitores</span>
                     </button>
                     <button class="nav-item" data-page="circuits">
                         <span class="nav-icon">ϟ</span>
@@ -75,7 +85,7 @@
             <div class="sidebar-footer">
                 <div class="status-indicator"></div>
                 <span>Sistema operacional</span>
-                <span class="version">v1.1</span>
+                <span class="version">v1.2</span>
             </div>
 
         </aside>
@@ -139,6 +149,22 @@
                     </div>
 
                     <div class="module-grid">
+
+                        <article class="module-card" data-go="electrostatics">
+                            <div class="module-icon green">±</div>
+                            <span class="module-tag">ELETROSTÁTICA</span>
+                            <h4>Cargas e campo elétrico</h4>
+                            <p>Posicione cargas e veja o campo, o potencial e a força em qualquer ponto.</p>
+                            <div class="module-link">Acessar módulo <span>→</span></div>
+                        </article>
+
+                        <article class="module-card" data-go="capacitors">
+                            <div class="module-icon teal">⫴</div>
+                            <span class="module-tag">ELETROSTÁTICA</span>
+                            <h4>Capacitores</h4>
+                            <p>Altere placas, tensão e dielétrico e compare associações em série e paralelo.</p>
+                            <div class="module-link">Acessar módulo <span>→</span></div>
+                        </article>
 
                         <article class="module-card" data-go="circuits">
                             <div class="module-icon blue">ϟ</div>
@@ -721,6 +747,324 @@
     </div>
 </section>
 
+<section class="page" id="electrostatics">
+    <div class="page-heading">
+        <span class="eyebrow">MÓDULO 04 · ELETROSTÁTICA</span>
+        <h2>Cargas, campo e potencial elétrico</h2>
+        <p>Coloque duas cargas puntiformes, escolha um ponto P e veja o campo elétrico, o potencial e a força. Você também pode arrastar o ponto P direto na figura.</p>
+    </div>
+
+    <div class="induction-layout">
+        <div class="induction-controls">
+            <div class="induction-card">
+                <h3>Parâmetros da simulação</h3>
+                <p class="induction-description">Use valores negativos para cargas negativas. As cargas ficam sobre o eixo x, a primeira na origem.</p>
+
+                <div class="induction-input">
+                    <label for="es-q1">Carga q1 (nC)</label>
+                    <input type="number" id="es-q1" value="5" min="-50" max="50" step="1">
+                </div>
+
+                <div class="induction-input">
+                    <label for="es-q2">Carga q2 (nC)</label>
+                    <input type="number" id="es-q2" value="-5" min="-50" max="50" step="1">
+                </div>
+
+                <div class="induction-input">
+                    <label for="es-d">Distância entre q1 e q2 (cm)</label>
+                    <input type="number" id="es-d" value="40" min="10" max="80" step="1">
+                </div>
+
+                <div class="induction-input">
+                    <label for="es-px">Posição x do ponto P (cm)</label>
+                    <input type="number" id="es-px" value="20" min="-20" max="100" step="1">
+                </div>
+
+                <div class="induction-input">
+                    <label for="es-py">Posição y do ponto P (cm)</label>
+                    <input type="number" id="es-py" value="15" min="-33" max="33" step="1">
+                </div>
+
+                <button id="es-reset" class="induction-reset">Restaurar valores</button>
+            </div>
+        </div>
+
+        <div class="induction-results">
+            <div class="induction-card">
+                <h3>Campo e superfície equipotencial</h3>
+                <p class="induction-description">Linhas de campo saem das cargas positivas e chegam às negativas. A curva tracejada passa por P e tem o mesmo potencial em todos os pontos.</p>
+
+                <div class="induction-visual">
+                    <svg viewBox="0 0 600 320" id="es-svg" role="img" aria-label="Linhas de campo elétrico de duas cargas puntiformes" style="touch-action:none">
+                        <rect x="4" y="4" width="592" height="312" rx="12" fill="#f4f7fc"/>
+                        <path id="es-equipotential" fill="none" stroke="#e58a32" stroke-width="2" stroke-dasharray="6 5"/>
+                        <g id="es-lines" fill="none" stroke="#94a3b8" stroke-width="1.6"></g>
+                        <g id="es-line-arrows" fill="#64748b"></g>
+                        <g id="es-charges"></g>
+                        <line id="es-vector" stroke="#16a36a" stroke-width="3" stroke-linecap="round"/>
+                        <polygon id="es-vector-head" fill="#16a36a"/>
+                        <circle id="es-probe" r="8" fill="#ffffff" stroke="#16a36a" stroke-width="3" style="cursor:grab"/>
+                        <text id="es-probe-label" font-size="13" font-weight="700" fill="#166534">P</text>
+                    </svg>
+                </div>
+
+                <div class="induction-legend">
+                    <span><i class="induction-legend-field"></i> Linhas de campo</span>
+                    <span><i class="es-legend-vector"></i> Campo resultante em P</span>
+                    <span><i class="es-legend-equi"></i> Equipotencial de P</span>
+                </div>
+            </div>
+
+            <div class="induction-card">
+                <h3>Resultados em P</h3>
+
+                <div class="induction-result-grid">
+                    <div class="induction-result">
+                        <span>Campo elétrico (módulo)</span>
+                        <strong id="es-e-mag">0 N/C</strong>
+                    </div>
+                    <div class="induction-result">
+                        <span>Direção do campo (em relação ao eixo x)</span>
+                        <strong id="es-e-angle">0°</strong>
+                    </div>
+                    <div class="induction-result">
+                        <span>Componentes Ex e Ey</span>
+                        <strong id="es-e-comp">0 ; 0 N/C</strong>
+                    </div>
+                    <div class="induction-result">
+                        <span>Potencial elétrico</span>
+                        <strong id="es-potential">0 V</strong>
+                    </div>
+                    <div class="induction-result">
+                        <span>Força sobre uma carga de prova de +1 nC</span>
+                        <strong id="es-force">0 N</strong>
+                    </div>
+                    <div class="induction-result">
+                        <span>Distâncias de P a q1 e q2</span>
+                        <strong id="es-dist">0 ; 0 cm</strong>
+                    </div>
+                </div>
+
+                <div class="induction-explanation">
+                    <h4>Entenda o resultado</h4>
+                    <p id="es-explanation"></p>
+                </div>
+            </div>
+
+            <div class="induction-card">
+                <h3>Fórmulas utilizadas</h3>
+
+                <div class="induction-formula">
+                    <strong>Campo de cada carga</strong>
+                    <span>E = k · |q| / r²</span>
+                </div>
+
+                <div class="induction-formula">
+                    <strong>Superposição (soma vetorial)</strong>
+                    <span>E = E1 + E2 (em componentes x e y)</span>
+                </div>
+
+                <div class="induction-formula">
+                    <strong>Potencial (soma algébrica)</strong>
+                    <span>V = k · q1 / r1 + k · q2 / r2</span>
+                </div>
+
+                <div class="induction-formula">
+                    <strong>Força sobre a carga de prova</strong>
+                    <span>F = q0 · E</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="page" id="capacitors">
+    <div class="page-heading">
+        <span class="eyebrow">MÓDULO 05 · ELETROSTÁTICA</span>
+        <h2>Capacitores e dielétricos</h2>
+        <p>Veja como área, distância, tensão e dielétrico mudam a capacitância, a carga e a energia armazenada. Depois, compare as associações em série e em paralelo.</p>
+    </div>
+
+    <div class="induction-layout">
+        <div class="induction-controls">
+            <div class="induction-card">
+                <h3>Capacitor de placas paralelas</h3>
+                <p class="induction-description">Escolha se a bateria fica ligada ao inserir o dielétrico.</p>
+
+                <div class="induction-input">
+                    <label for="cap-area">Área de cada placa (cm²)</label>
+                    <input type="number" id="cap-area" value="100" min="1" max="10000" step="1">
+                </div>
+
+                <div class="induction-input">
+                    <label for="cap-dist">Distância entre as placas (mm)</label>
+                    <input type="number" id="cap-dist" value="2" min="0.1" max="20" step="0.1">
+                </div>
+
+                <div class="induction-input">
+                    <label for="cap-material">Dielétrico</label>
+                    <select id="cap-material">
+                        <option value="1">Vácuo ou ar (κ = 1)</option>
+                        <option value="2.3">Polietileno (κ ≈ 2,3)</option>
+                        <option value="3.7">Papel (κ ≈ 3,7)</option>
+                        <option value="5">Vidro (κ ≈ 5)</option>
+                        <option value="80">Água (κ ≈ 80)</option>
+                        <option value="custom">Outro valor…</option>
+                    </select>
+                </div>
+
+                <div class="induction-input">
+                    <label for="cap-kappa">Constante dielétrica κ</label>
+                    <input type="number" id="cap-kappa" value="1" min="1" max="100" step="0.1">
+                </div>
+
+                <div class="induction-input">
+                    <label for="cap-voltage">Tensão da bateria (V)</label>
+                    <input type="number" id="cap-voltage" value="12" min="1" max="1000" step="1">
+                </div>
+
+                <div class="induction-input">
+                    <label for="cap-mode">Bateria</label>
+                    <select id="cap-mode">
+                        <option value="connected">Ligada (tensão constante)</option>
+                        <option value="disconnected">Desligada (carga constante)</option>
+                    </select>
+                </div>
+
+                <button id="cap-reset" class="induction-reset">Restaurar valores</button>
+            </div>
+
+            <div class="induction-card">
+                <h3>Associação de dois capacitores</h3>
+                <p class="induction-description">Valores iniciais do exemplo de aula: 6 µF, 3 µF e 18 V.</p>
+
+                <div class="induction-input">
+                    <label for="cap-c1">C1 (µF)</label>
+                    <input type="number" id="cap-c1" value="6" min="0.1" max="1000" step="0.1">
+                </div>
+
+                <div class="induction-input">
+                    <label for="cap-c2">C2 (µF)</label>
+                    <input type="number" id="cap-c2" value="3" min="0.1" max="1000" step="0.1">
+                </div>
+
+                <div class="induction-input">
+                    <label for="cap-assoc-v">Tensão aplicada (V)</label>
+                    <input type="number" id="cap-assoc-v" value="18" min="1" max="1000" step="1">
+                </div>
+            </div>
+        </div>
+
+        <div class="induction-results">
+            <div class="induction-card">
+                <h3>Visualização</h3>
+                <p class="induction-description">Mais sinais nas placas significa mais carga. As setas mostram o campo entre as placas.</p>
+
+                <div class="induction-visual">
+                    <svg viewBox="0 0 600 300" id="cap-svg" role="img" aria-label="Capacitor de placas paralelas">
+                        <rect x="4" y="4" width="592" height="292" rx="12" fill="#f4f7fc"/>
+                        <g id="cap-wires" stroke="#475569" stroke-width="2.5" fill="none"></g>
+                        <rect id="cap-plate-top" x="170" width="260" height="10" rx="3" fill="#2563eb"/>
+                        <rect id="cap-plate-bottom" x="170" width="260" height="10" rx="3" fill="#2563eb"/>
+                        <rect id="cap-dielectric" x="174" width="252" fill="#e58a32" opacity="0"/>
+                        <g id="cap-field" stroke="#16a36a" stroke-width="2" fill="#16a36a"></g>
+                        <g id="cap-signs" font-size="16" font-weight="800" text-anchor="middle"></g>
+                        <text id="cap-visual-value" x="300" y="285" text-anchor="middle" fill="#475569" font-size="13"></text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="induction-card">
+                <h3>Resultados do capacitor</h3>
+
+                <div class="induction-result-grid">
+                    <div class="induction-result">
+                        <span>Capacitância sem dielétrico (C0)</span>
+                        <strong id="cap-c0">0 F</strong>
+                    </div>
+                    <div class="induction-result">
+                        <span>Capacitância com dielétrico (C)</span>
+                        <strong id="cap-c">0 F</strong>
+                    </div>
+                    <div class="induction-result">
+                        <span>Carga em cada placa</span>
+                        <strong id="cap-q">0 C</strong>
+                    </div>
+                    <div class="induction-result">
+                        <span>Tensão entre as placas</span>
+                        <strong id="cap-v">0 V</strong>
+                    </div>
+                    <div class="induction-result">
+                        <span>Campo elétrico entre as placas</span>
+                        <strong id="cap-e">0 V/m</strong>
+                    </div>
+                    <div class="induction-result">
+                        <span>Energia armazenada</span>
+                        <strong id="cap-u">0 J</strong>
+                    </div>
+                </div>
+
+                <div class="induction-explanation">
+                    <h4>Entenda o resultado</h4>
+                    <p id="cap-explanation"></p>
+                </div>
+            </div>
+
+            <div class="induction-card">
+                <h3>Resultados da associação</h3>
+
+                <div class="induction-result-grid">
+                    <div class="induction-result">
+                        <span>Série: capacitância equivalente</span>
+                        <strong id="cap-series-ceq">0 F</strong>
+                    </div>
+                    <div class="induction-result">
+                        <span>Paralelo: capacitância equivalente</span>
+                        <strong id="cap-parallel-ceq">0 F</strong>
+                    </div>
+                    <div class="induction-result">
+                        <span>Série: carga (igual nos dois) e tensões V1 ; V2</span>
+                        <strong id="cap-series-detail">—</strong>
+                    </div>
+                    <div class="induction-result">
+                        <span>Paralelo: tensão (igual nos dois) e cargas Q1 ; Q2</span>
+                        <strong id="cap-parallel-detail">—</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="induction-card">
+                <h3>Fórmulas utilizadas</h3>
+
+                <div class="induction-formula">
+                    <strong>Placas paralelas com dielétrico</strong>
+                    <span>C = κ · ε0 · A / d</span>
+                </div>
+
+                <div class="induction-formula">
+                    <strong>Carga</strong>
+                    <span>Q = C · V</span>
+                </div>
+
+                <div class="induction-formula">
+                    <strong>Energia armazenada</strong>
+                    <span>U = ½ · C · V²</span>
+                </div>
+
+                <div class="induction-formula">
+                    <strong>Série</strong>
+                    <span>1/Ceq = 1/C1 + 1/C2</span>
+                </div>
+
+                <div class="induction-formula">
+                    <strong>Paralelo</strong>
+                    <span>Ceq = C1 + C2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="page" id="calculator">
     <div class="page-heading">
         <span class="eyebrow">FERRAMENTA · CÁLCULO</span>
@@ -792,6 +1136,8 @@
 
     <div class="exercise-topics">
         <button class="exercise-topic active" data-topic="all">Todos os temas</button>
+        <button class="exercise-topic" data-topic="electrostatics">± Eletrostática</button>
+        <button class="exercise-topic" data-topic="capacitors">⫴ Capacitores</button>
         <button class="exercise-topic" data-topic="circuits">ϟ Circuitos</button>
         <button class="exercise-topic" data-topic="magnetism">◎ Magnetismo</button>
         <button class="exercise-topic" data-topic="induction">↝ Indução</button>
@@ -864,6 +1210,8 @@
         </div>
         <div class="theory-filters">
             <button class="theory-filter active" data-filter="all">Todos</button>
+            <button class="theory-filter" data-filter="electrostatics">Eletrostática</button>
+            <button class="theory-filter" data-filter="capacitors">Capacitores</button>
             <button class="theory-filter" data-filter="circuits">Circuitos</button>
             <button class="theory-filter" data-filter="magnetism">Magnetismo</button>
             <button class="theory-filter" data-filter="induction">Indução</button>

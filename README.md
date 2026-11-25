@@ -1,6 +1,6 @@
 # ⚡ PHYSICS LAB
 
-**Laboratório Interativo de Física III**: um laboratório virtual feito em HTML, CSS e JavaScript puro para explorar circuitos elétricos, magnetismo e indução eletromagnética com simulações, uma calculadora de fórmulas, exercícios gerados automaticamente e um referencial teórico.
+**Laboratório Interativo de Física III**: um laboratório virtual feito em HTML, CSS e JavaScript puro para explorar eletrostática, capacitores, circuitos elétricos, magnetismo e indução eletromagnética com simulações, uma calculadora de fórmulas, exercícios gerados automaticamente e um referencial teórico.
 
 > Explore a Física. Entenda o universo.
 
@@ -18,6 +18,20 @@
 ---
 
 ## ✨ Funcionalidades
+
+### ± Módulo 04: Eletrostática
+Duas cargas puntiformes sobre o eixo x, com carga e distância ajustáveis.
+- Linhas de campo elétrico desenhadas a partir das cargas
+- Ponto P que pode ser **arrastado** na figura ou digitado
+- Campo elétrico resultante em P (módulo, direção e componentes), potencial elétrico e força sobre uma carga de prova de +1 nC
+- Curva equipotencial que passa por P
+- Explicação do resultado: superposição vetorial do campo e soma algébrica do potencial
+
+### ⫴ Módulo 05: Capacitores
+- Capacitor de placas paralelas com área, distância, tensão e dielétrico (materiais pré-definidos ou κ livre)
+- Bateria **ligada** (tensão constante) ou **desligada** (carga constante) ao inserir o dielétrico
+- Capacitância, carga, tensão, campo elétrico e energia armazenada
+- Associação de dois capacitores em série e em paralelo, com carga e tensão de cada um
 
 ### ϟ Módulo 01: Circuitos elétricos
 Simulador de circuitos com três resistores e uma fonte DC.
@@ -42,15 +56,19 @@ Lei de Faraday-Lenz aplicada a uma espira (ou bobina).
 
 ### ∑ Calculadora de fórmulas
 Escolha uma fórmula e calcule **qualquer variável** a partir das outras, com passo a passo.
-- Lei de Ohm, potência elétrica, efeito Joule, resistores em paralelo
+- Corrente, 2ª Lei de Ohm, fonte real, Lei de Ohm, potência elétrica, efeito Joule, resistores em paralelo
+- Lei de Coulomb, campo elétrico, força e aceleração de cargas, fluxo, Lei de Gauss (esfera, linha e plano), potencial e diferença de potencial
+- Capacitores: placas paralelas com dielétrico, carga, energia, densidade de energia, série, paralelo e capacitor esférico
 - Força magnética sobre carga, raio da trajetória, campo de fio retilíneo, campo de solenoide, força sobre condutor
 - Fluxo magnético, Lei de Faraday, FEM de movimento, transformador ideal
+- Campo de espira, força entre fios paralelos, torque em espira, gerador, autoindutância, energia em indutor, indutância mútua e acoplamento
 - Suporte a prefixos do SI (G, M, k, m, µ, n, p)
 - Histórico de cálculos salvo no navegador
 
 ### ✎ Exercícios
 - Questões **numéricas** geradas aleatoriamente e questões **conceituais**
-- Filtro por tema: Circuitos, Magnetismo, Indução ou todos
+- Filtro por tema: Eletrostática, Capacitores, Circuitos, Magnetismo, Indução ou todos
+- 46 geradores de questões numéricas (valores sorteados) e 33 questões conceituais, escritos a partir da ementa de Física III
 - Dicas e resolução passo a passo
 - Correção com tolerância (±2% por padrão)
 - Estatísticas de desempenho: acertos, total, aproveitamento, sequência atual, melhor sequência e resultado por tema, salvas no navegador
@@ -97,6 +115,8 @@ PhysicsLab/
     ├── navigation.js       # Navegação entre páginas (SPA com hash)
     ├── utils.js            # Constantes físicas e funções compartilhadas
     ├── physics/
+    │   ├── electrostatics.js # Cargas, campo e potencial
+    │   ├── capacitors.js   # Capacitores e dielétricos
     │   ├── circuits.js     # Simulador de circuitos + diagrama SVG
     │   ├── magnetism.js    # Partícula em campo magnético
     │   └── induction.js    # Indução eletromagnética

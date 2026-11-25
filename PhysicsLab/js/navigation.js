@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const pageNames = {
         home: "Início",
+        electrostatics: "Eletrostática",
+        capacitors: "Capacitores",
         circuits: "Circuitos elétricos",
         magnetism: "Magnetismo",
         induction: "Indução eletromagnética",

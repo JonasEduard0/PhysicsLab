@@ -57,14 +57,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             totalCurrent = voltage / equivalentResistance;
 
-            resistances.forEach((activeResistances, index) => {
-            const current = totalCurrent;
-            const componentVoltage = current * activeResistances;
-            const power = componentVoltage * current;
+            activeResistances.forEach((resistance, index) => {
+                const current = totalCurrent;
+                const componentVoltage = current * resistance;
+                const power = componentVoltage * current;
 
                 components.push({
                     name: `R${index + 1}`,
-                    activeResistances,
+                    resistance,
                     voltage: componentVoltage,
                     current,
                     power
@@ -83,14 +83,14 @@ document.addEventListener("DOMContentLoaded", () => {
             equivalentResistance = 1 / inverseSum;
             totalCurrent = voltage / equivalentResistance;
 
-            activeResistances.forEach((activeResistances, index) => {
+            activeResistances.forEach((resistance, index) => {
                 const componentVoltage = voltage;
-                const current = componentVoltage / activeResistances;
+                const current = componentVoltage / resistance;
                 const power = componentVoltage * current;
 
                 components.push({
                     name: `R${index + 1}`,
-                    activeResistances,
+                    resistance,
                     voltage: componentVoltage,
                     current,
                     power
@@ -272,10 +272,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             drawing = `
                 <path class="circuit-wire"
-                    d="M 100 145 V 65 H 170
+                    d="M 100 162 V 65 H 170
                        M 255 65 H 335
-                       M 420 65 H 500 V 145
-                       M 500 145 V 235 H 100 V 145" />
+                       M 420 65 H 500 V 235 H 100 V 180" />
 
                 ${battery(100, 180)}
 
@@ -300,10 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (selectedCircuit === "parallel") {
             drawing = `
                 <path class="circuit-wire"
-                    d="M 100 145 V 65 H 225
-                       M 310 65 H 405
-                       M 490 65 H 510 V 235
-                       M 510 235 H 100 V 215" />
+                    d="M 100 162 V 65 H 510 V 235 H 100 V 180" />
 
                 <path class="circuit-wire"
                     d="M 225 65 V 125
@@ -316,12 +312,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${resistorVertical(405, 125, "R2")}
 
                 <text class="circuit-small-text"
-                    x="225" y="230"
-                    text-anchor="middle">${resistances[0]} Ω</text>
+                    x="250" y="191">${resistances[0]} Ω</text>
 
                 <text class="circuit-small-text"
-                    x="405" y="230"
-                    text-anchor="middle">${resistances[1]} Ω</text>
+                    x="430" y="191">${resistances[1]} Ω</text>
 
                 <text class="circuit-text"
                     x="310" y="275"
@@ -333,10 +327,8 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (selectedCircuit === "mixed") {
             drawing = `
                 <path class="circuit-wire"
-                    d="M 100 145 V 65 H 170
-                       M 255 65 H 290
-                       M 290 65 H 500 V 235
-                       M 500 235 H 100 V 215" />
+                    d="M 100 162 V 65 H 170
+                       M 255 65 H 500 V 235 H 100 V 180" />
 
                 <path class="circuit-wire"
                     d="M 290 65 V 125
@@ -355,12 +347,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     text-anchor="middle">${resistances[0]} Ω</text>
 
                 <text class="circuit-small-text"
-                    x="290" y="230"
-                    text-anchor="middle">${resistances[1]} Ω</text>
+                    x="315" y="191">${resistances[1]} Ω</text>
 
                 <text class="circuit-small-text"
-                    x="420" y="230"
-                    text-anchor="middle">${resistances[2]} Ω</text>
+                    x="445" y="191">${resistances[2]} Ω</text>
 
                 <text class="circuit-text"
                     x="310" y="275"

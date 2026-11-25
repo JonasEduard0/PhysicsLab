@@ -3,7 +3,11 @@ window.PhysicsUtils = (() => {
     const constants = {
         mu0: 4 * Math.PI * 1e-7,
         k: 8.9875e9,
-        e: 1.602e-19
+        e: 1.602e-19,
+        epsilon0: 8.854e-12,
+        mp: 1.673e-27,
+        me: 9.109e-31,
+        g: 9.8
     };
 
     const prefixes = [
